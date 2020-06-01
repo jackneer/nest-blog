@@ -7,11 +7,11 @@ export class User {
   id: number;
 
   @ApiProperty()
-  @Column()
+  @Column({length: 100, unique: true})
   username: string;
 
   @ApiProperty()
-  @Column()
+  @Column({length: 100})
   password: string;
 
   @ApiProperty()
@@ -19,7 +19,7 @@ export class User {
   birthday: Date;
 
   @ApiProperty()
-  @Column()
+  @Column('int')
   age: number;
   
   @ApiProperty()

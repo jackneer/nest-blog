@@ -16,6 +16,12 @@ export class PostsController {
     return this.postService.findAll();
   }
 
+  @Get(':id')
+  @ApiOperation({summary: 'get post by id', description: ''})
+  findOne(@Param('id') id: number): Promise<BlogPost> {
+    return this.postService.findOne(id);
+  }
+
   @Get('recent')
   @ApiOperation({summary: 'get most recently created posts', description: ''})
   getRecent(): Promise<BlogPost[]> {

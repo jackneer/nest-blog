@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DeleteResult } from 'typeorm';
 import { Post } from './post.entity';
 
 @Injectable()
@@ -13,6 +13,12 @@ export class PostsService {
   async findAll(): Promise<Post[]> {
     
     return this.postRepository.find();
+    
+  }
+
+  async findOne(id: number): Promise<Post> {
+    
+    return this.postRepository.findOne(id);
   }
 
   async findRecent(): Promise<Post[]> {
@@ -37,7 +43,7 @@ export class PostsService {
     return this.postRepository.save(targetPost);
   }
 
-  delete(id: number) {
+  delete(id: number): Promise<DeleteResult> {
     return this.postRepository.delete(id);
   }
 }
