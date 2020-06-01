@@ -11,6 +11,33 @@ export class PostsService {
   ) {}
 
   async findAll(): Promise<Post[]> {
-    return this.postRepository.find()
+    
+    return this.postRepository.find();
+  }
+
+  async findRecent(): Promise<Post[]> {
+    let query = this.postRepository.createQueryBuilder().orderBy('createdAt', 'DESC').limit(3);
+
+    return query.getMany();
+  }
+
+  async create(post: Post) {
+    post.createdAt = new Date();
+
+    return this.postRepository.save(post);
+  }
+
+  async update(id: number, post: Post) {
+    let targetPost = await this.postRepository.findOne(id);
+    targetPost.composer = post.composer;
+    targetPost.title = post.title;
+    targetPost.content = post.content;
+    targetPost.isActive = post.isActive;
+
+    return this.postRepository.save(targetPost);
+  }
+
+  delete(id: number) {
+    return this.postRepository.delete(id);
   }
 }

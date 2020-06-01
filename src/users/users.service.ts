@@ -25,7 +25,10 @@ export class UsersService {
 
   async update(id: number, user: User): Promise<User> {
     let targetUser = await this.getUser(id);
+    targetUser.username = user.username;
+    targetUser.password = user.password;
     targetUser.birthday = user.birthday;
+    targetUser.age = user.age;
     targetUser.isActive = user.isActive;
     return this.userRepository.save(targetUser);
   }

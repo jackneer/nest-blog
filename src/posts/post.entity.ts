@@ -1,19 +1,27 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class Post {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    composer: number;
+  @ApiProperty()
+  @Column()
+  composer: number;
 
-    @Column()
-    title: string;
+  @ApiProperty()
+  @Column()
+  title: string;
 
-    @Column()
-    content: string;
+  @ApiProperty()
+  @Column()
+  content: string;
 
-    @Column({ default: true})
-    isActive: boolean;
+  @Column()
+  createdAt: Date;
+
+  @ApiProperty()
+  @Column({ default: true})
+  isActive: boolean;
 }
