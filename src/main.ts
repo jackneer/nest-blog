@@ -5,11 +5,14 @@ import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
 import { DataExceptionFilterFilter } from './filters/data-exception-filter.filter';
+import { ExecutionInterceptor } from './interceptors/execution.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalFilters( new DataExceptionFilterFilter());
+  
+  app.useGlobalInterceptors(new ExecutionInterceptor());
 
   const options = new DocumentBuilder()
     .setTitle('nest-blog')

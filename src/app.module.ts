@@ -7,11 +7,12 @@ import { Connection } from 'typeorm';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
+import { ExecutionInterceptor } from './interceptors/execution.interceptor';
 
 @Module({
   imports: [ TypeOrmModule.forRoot(), ScheduleModule.forRoot(), UsersModule, PostsModule, CommentsModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ExecutionInterceptor],
 })
 export class AppModule {
   constructor(private connection: Connection) {}
