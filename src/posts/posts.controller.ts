@@ -1,6 +1,5 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Query } from '@nestjs/common';
-import { create } from 'domain';
-import { ApiTags, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { PostsService } from './posts.service';
 import { Post as BlogPost } from './post.entity';
 import { DeleteResult } from 'typeorm';
@@ -22,10 +21,10 @@ export class PostsController {
     return this.postService.findOne(id);
   }
 
-  @Get('recent')
+  @Get('user/:userId')
   @ApiOperation({summary: 'get most recently created posts', description: ''})
-  getRecent(): Promise<BlogPost[]> {
-      return this.postService.findRecent();
+  getByUser(@Param('userId') userId: number): Promise<BlogPost[]> {
+      return this.postService.findByUser(userId);
   }
 
   @Post()

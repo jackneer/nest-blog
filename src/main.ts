@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
-import { DataExceptionFilterFilter } from './data-exception-filter.filter';
+import { DataExceptionFilterFilter } from './filters/data-exception-filter.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

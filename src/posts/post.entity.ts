@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from 'src/users/user.entity';
 
@@ -7,7 +7,12 @@ export class Post {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(type => User, composer => composer.id)
+  @ApiProperty()
+  @Column()
+  composerId: number;
+
+  @ManyToOne(() => User)
+  @JoinColumn({name: 'composerId', referencedColumnName: 'id'})
   composer: User;
 
   @ApiProperty()

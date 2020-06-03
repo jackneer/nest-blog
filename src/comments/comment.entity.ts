@@ -1,32 +1,38 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from 'src/users/user.entity';
-import { getCustomRepositoryToken } from '@nestjs/typeorm';
 import { Post } from 'src/posts/post.entity';
 
 @Entity()
 export class Comment {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @ManyToOne(type => User, composer => composer.id)
-    composer: User;
+  @ApiProperty()
+  @Column()
+  composerId: number;
 
-    @ManyToOne(type => Post, post => post.id)
-    post: Post;
+  @ManyToOne(() => User, composer => composer.id)
+  @JoinColumn({name: 'composerId', referencedColumnName: 'id'})
+  composer: User;
 
-    @ManyToOne(type => Comment, comment => comment.id)
-    comment: Comment;
+  @ApiProperty()
+  @Column()
+  postId: number;
 
-    @ApiProperty()
-    @Column('text')
-    content: string;
+  @ManyToOne(() => Post, post => post.id)
+  @JoinColumn({name: 'postId', referencedColumnName: 'id'})
+  post: Post;
 
-    @ApiProperty()
-    @Column()
-    createdAt: Date;
+  @ApiProperty()
+  @Column('text')
+  content: string;
 
-    @ApiProperty()
-    @Column({ default: true})
-    isActive: boolean;
+  @ApiProperty()
+  @Column()
+  createdAt: Date;
+
+  @ApiProperty()
+  @Column({ default: true})
+  isActive: boolean;
 }

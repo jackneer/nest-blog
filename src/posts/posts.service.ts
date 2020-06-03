@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DeleteResult } from 'typeorm';
 import { Post } from './post.entity';
 
+
 @Injectable()
 export class PostsService {
   constructor(
@@ -12,17 +13,17 @@ export class PostsService {
 
   async findAll(): Promise<Post[]> {
     
-    return this.postRepository.find();
+    return this.postRepository.find({relations: ['composer']});
     
   }
 
   async findOne(id: number): Promise<Post> {
     
-    return this.postRepository.findOneOrFail(id);
+    return this.postRepository.findOneOrFail(id, {relations: ['composer']});
   }
 
-  async findRecent(): Promise<Post[]> {
-    let query = this.postRepository.createQueryBuilder().orderBy('createdAt', 'DESC').limit(3);
+  async findByUser(userId: number): Promise<Post[]> {
+    const query = this.postRepository.createQueryBuilder().leftJoinAndSelect('Post.composer', 'composer').where({ "composerId": userId });    
 
     return query.getMany();
   }
@@ -34,7 +35,7 @@ export class PostsService {
   }
 
   async update(id: number, post: Post) {
-    let targetPost = await this.postRepository.findOneOrFail(id);
+    const targetPost = await this.postRepository.findOneOrFail(id);
     targetPost.composer = post.composer;
     targetPost.title = post.title;
     targetPost.content = post.content;

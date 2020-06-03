@@ -11,7 +11,7 @@ export class CommentsService {
   ) {}
 
   async findByPostId(postId: number): Promise<Comment[]> {
-    let query = this.commentRepository.createQueryBuilder().where('Comment.postId = :postId', {postId: postId});
+    const query = this.commentRepository.createQueryBuilder().leftJoinAndSelect('Comment.composer', 'composer').where('Comment.postId = :postId', {postId: postId});
     return query.getMany();
   }
 
@@ -21,7 +21,7 @@ export class CommentsService {
   }
 
   async update(id: number, comment: Comment): Promise<Comment> {
-    let targetComment = await this.commentRepository.findOneOrFail(id);
+    const targetComment = await this.commentRepository.findOneOrFail(id);
     targetComment.content = comment.content;
 
     return this.commentRepository.save(targetComment);

@@ -9,7 +9,7 @@ import { DeleteResult } from 'typeorm';
 export class CommentsController {
     constructor(private commentService: CommentsService) {}
 
-  @Get(':postId')
+  @Get('post/:postId')
   @ApiOperation({summary: 'get comments of post by postId', description: ''})
   findByPostId(@Param('postId') postId: number): Promise<Comment[]> {
       return this.commentService.findByPostId(postId);
