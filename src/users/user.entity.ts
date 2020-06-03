@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { ApiProperty } from '@nestjs/swagger';
+import { Entity, PrimaryGeneratedColumn, Column, Exclusion } from 'typeorm';
+import { ApiProperty, ApiExcludeEndpoint } from '@nestjs/swagger';
 
 @Entity()
 export class User {
@@ -7,11 +7,11 @@ export class User {
   id: number;
 
   @ApiProperty()
-  @Column({length: 100, unique: true})
+  @Column({type: 'varchar', length: 100, unique: true})
   username: string;
 
   @ApiProperty()
-  @Column({length: 100})
+  @Column({type: 'varchar', length: 100, select: false})
   password: string;
 
   @ApiProperty()

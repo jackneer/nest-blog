@@ -1,22 +1,22 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from 'src/users/user.entity';
+import { getCustomRepositoryToken } from '@nestjs/typeorm';
+import { Post } from 'src/posts/post.entity';
 
 @Entity()
 export class Comment {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ApiProperty()
-    @Column()
-    composer: number;
+    @ManyToOne(type => User, composer => composer.id)
+    composer: User;
 
-    @ApiProperty()
-    @Column()
-    postId: number;
+    @ManyToOne(type => Post, post => post.id)
+    post: Post;
 
-    @ApiProperty()
-    @Column()
-    commentId: number;
+    @ManyToOne(type => Comment, comment => comment.id)
+    comment: Comment;
 
     @ApiProperty()
     @Column('text')

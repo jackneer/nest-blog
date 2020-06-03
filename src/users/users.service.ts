@@ -16,7 +16,7 @@ export class UsersService {
   }
 
   async getUser(id: number): Promise<User> {
-    return this.userRepository.findOne(id);
+    return this.userRepository.findOneOrFail(id);
   }
 
   async create(user: User): Promise<User> {

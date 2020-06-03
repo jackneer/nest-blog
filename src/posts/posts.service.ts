@@ -18,7 +18,7 @@ export class PostsService {
 
   async findOne(id: number): Promise<Post> {
     
-    return this.postRepository.findOne(id);
+    return this.postRepository.findOneOrFail(id);
   }
 
   async findRecent(): Promise<Post[]> {
@@ -34,7 +34,7 @@ export class PostsService {
   }
 
   async update(id: number, post: Post) {
-    let targetPost = await this.postRepository.findOne(id);
+    let targetPost = await this.postRepository.findOneOrFail(id);
     targetPost.composer = post.composer;
     targetPost.title = post.title;
     targetPost.content = post.content;

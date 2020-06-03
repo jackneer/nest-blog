@@ -21,7 +21,7 @@ export class CommentsService {
   }
 
   async update(id: number, comment: Comment): Promise<Comment> {
-    let targetComment = await this.commentRepository.findOne(id);
+    let targetComment = await this.commentRepository.findOneOrFail(id);
     targetComment.content = comment.content;
 
     return this.commentRepository.save(targetComment);
