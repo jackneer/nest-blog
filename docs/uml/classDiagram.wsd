@@ -1,0 +1,92 @@
+@startuml
+scale 1
+left to right direction
+skinparam PackageStyle rect
+
+package appModule {
+  package UserModule {
+    class UserController {
+      findAll_GET()
+      findOne_GET(id)
+      create_POST(user)
+      update_PUT(id, user)
+      delete_DELETE(id)
+    }
+    class UserService {
+      getUsers()
+      getUser(id)
+      create(user)
+      update(id, user)
+      delete(id)
+    }
+    class UserRepository {
+      find()
+      findOne(id)
+      save(user)
+      delete(id)
+    }
+    class UserEntity
+
+    UserController --> UserService
+    UserService --> UserRepository    
+  }
+
+  package PostModule {
+    class PostController {
+      findAll_GET()
+      findOne_GET(id)
+      getByUser_GET(userId)
+      create_POST(post)
+      update_PUT(id, post)
+      delete_DELETE(id)
+    }
+    class PostService {
+      findAll()
+      findOne(id)
+      findByUser(userId)
+      create(post)
+      update(id, post)
+      delete(id)
+    }
+    class PostRepository {
+      find()
+      findOne(id)
+      save(post)
+      delete(id)
+      queryBuilder().getMany()
+    }
+    class PostEntity
+
+    PostController --> PostService
+    PostService --> PostRepository 
+    PostEntity --> UserEntity   
+  }
+
+  package CommentModule {
+    class CommentController {
+      findByPostId_GET(postId)
+      create_POST(comment)
+      update_PUT(id, comment)
+      delete_DELETE(id)
+    }
+    class CommentService {
+      findByPostId(postId)
+      create(comment)
+      update(id, comment)
+      delete(id)
+    }
+    class CommentRepository {
+      save(comment)
+      delete(id)
+      queryBuilder().getMany()
+    }
+    class CommentEntity
+
+    CommentController --> CommentService
+    CommentService --> CommentRepository
+
+    CommentEntity --> PostEntity
+    CommentEntity --> UserEntity 
+  }
+}
+@enduml

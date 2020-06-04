@@ -1,0 +1,55 @@
+@startuml
+scale 1
+left to right direction
+skinparam PackageStyle rect
+
+actor user
+actor composer
+actor reader
+
+user --> composer
+user --> reader
+user --> admin
+
+package UserModule {
+  (create an account) as UCU01
+  (update an account) as UCU02
+  (delete an account) as UCU03
+  (list all users) as UCU04
+}
+
+user --> UCU01
+user --> UCU02
+user --> UCU03
+admin --> UCU04
+
+package PostModule {
+  (write a post) as UCP01
+  (update a post) as UCP02
+  (delete a post) as UCP03
+  (list all posts) as UCP04
+  (list posts by user) as UCP05
+  (read a post) as UCP06
+}
+
+composer --> UCP01
+composer --> UCP02
+composer --> UCP03
+admin --> UCP03
+user --> UCP04
+user --> UCP05
+user --> UCP06
+
+package CommentModule {
+  (write a comment for a post) as UCC01
+  (update comment) as UCC02
+  (delete comment) as UCC03
+  (list comments of a post) as UCC04
+}
+
+user --> UCC01
+user --> UCC02
+admin --> UCC03
+user ->> UCC04
+
+@enduml
